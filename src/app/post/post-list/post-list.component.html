@@ -1,0 +1,10 @@
+<mat-accordion *ngIf="myPosts.length > 0">
+  <mat-expansion-panel [hideToggle]="false" *ngFor="let item of myPosts">
+      <mat-expansion-panel-header>
+          <mat-panel-title>{{ item.title }}</mat-panel-title>
+          <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      {{item.content}}
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="myPosts.length == 0" class="mat-body1">No Posts Till Now</p>
