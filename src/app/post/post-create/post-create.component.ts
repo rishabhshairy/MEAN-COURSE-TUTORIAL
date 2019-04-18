@@ -1,6 +1,7 @@
+import { PostService } from './../post.service';
 import { Post } from './../../shared/model/post.model';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-post-create',
@@ -11,8 +12,7 @@ export class PostCreateComponent implements OnInit {
   postForm: FormGroup;
   enteredTitle = '';
   enteredContent = '';
-  @Output() postCreated = new EventEmitter<Post>();
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private postService: PostService) { }
 
   ngOnInit() {
     this.postForm = this.formBuilder.group({
@@ -23,12 +23,10 @@ export class PostCreateComponent implements OnInit {
   get f() {
     return this.postForm.controls;
   }
-  onSave() {
-    const post: Post = {
-      title: this.postForm.get('title').value,
-      content: this.postForm.get('content').value
-    };
-    this.postCreated.emit(post);
+  onSave(formDirective: FormGroupDirective) {
+    this.postService.addPost(this.postForm.get('title').value, this.postForm.get('content').value);
+    formDirective.resetForm();
+    this.postForm.reset();
   }
 
 }

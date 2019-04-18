@@ -4,7 +4,13 @@
           <mat-panel-title>{{ item.title }}</mat-panel-title>
           <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
-      {{item.content}}
+       <p>{{item.content}}</p>
+       <mat-action-row>
+        <button mat-raised-button color="accent">Edit</button>
+        <span style="width: 25px;"></span>
+        <button mat-raised-button color="warn">Delete</button>    
+      </mat-action-row>
   </mat-expansion-panel>
+
 </mat-accordion>
 <p *ngIf="myPosts.length == 0" class="mat-body1">No Posts Till Now</p>
