@@ -2,6 +2,19 @@ var express = require('express');
 const body = require('body-parser');
 const app = express();
 
+// Exporting model for storage
+const PostModel  = require('./model/post');
+//connecting mongoDB with mongoose
+const mongoose = require('mongoose');
+mongoose.connect("//add your own mongoDb string url", { useNewUrlParser: true })
+    .then(() => {
+        console.log("Connection Established");
+        
+    }).catch((err) => {
+       console.log(err);
+       
+    });
+
 app.use(body.json());
 app.use(body.urlencoded());
 //allowing all clients to acess the resource
@@ -13,23 +26,45 @@ app.use((req, res, next) => {
     next();
 })
 app.post('/api/posts', (req, res, next) => {
-    const posts = req.body;
-    console.log(posts);
+    const post = new PostModel({
+        title: req.body.title,
+        content: req.body.content
+    });
+    console.log(post);
+    post.save();
     res.status(201).json({
         message: 'Post Added Success'
     });
     
-})
-app.use('/api/posts',(req, res , next) => {
-    const posts = [
-        { id:'a1qsaxa', title: 'First Post From my own backend', content: 'heyy there how its going' },
-        { id:'a1qsasa', title: 'Second Post From my own backend', content: 'heyy there how its going' },
-        { id:'a1qadfd', title: 'Third Post From my own backend', content: 'heyy there how its going' }
-    ]
-    res.status(200).json({
+});
+app.get('/api/posts',(req, res , next) => {
+    PostModel.find()
+    .then((document) => {
+        // console.log(document);
+        res.status(200).json({
         message: 'Post Send Success',
-        posts: posts
-    });   
+        posts: document
+    });  
+    }).catch((err) => {
+        console.log("Error in Querying data");
+        
+    });
+ 
+});
+
+app.delete('/api/posts/:id',(req, res, next) => {
+    console.log(req.params.id);
+    PostModel.deleteOne({_id:req.params.id})
+    .then((result) => {
+        console.log('Deleted From DB');
+        
+    }).catch((err) => {
+        console.log(err);
+        
+    });;
+    res.status(200).json({
+        message: 'Post Deleted'
+    });
 });
 
 module.exports = app;

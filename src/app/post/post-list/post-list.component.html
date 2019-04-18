@@ -8,7 +8,7 @@
        <mat-action-row>
         <button mat-raised-button color="accent">Edit</button>
         <span style="width: 25px;"></span>
-        <button mat-raised-button color="warn">Delete</button>    
+        <button mat-raised-button (click)="onDelete(item.id)" color="warn">Delete</button>    
       </mat-action-row>
   </mat-expansion-panel>
 

@@ -6,6 +6,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Backend server
+
+Run `npm run start:server` for a backend running server at `http://localhost:3000`.
+
+##Mongo DB Connection 
+
+Provide your own MongoDB Connection String in /backend/app.js file at line number 9;
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
